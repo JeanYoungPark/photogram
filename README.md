@@ -1,38 +1,23 @@
 # 포토그램 - 인스타그램 클론 코딩
 
-### STS 툴에 세팅하기 - 플러그인 설정
-- https://blog.naver.com/getinthere/222322821611
+[comment]: <> (### STS 툴에 세팅하기 - 플러그인 설정)
+
+[comment]: <> (- https://blog.naver.com/getinthere/222322821611)
 
 ### 의존성
 
 - Sring Boot DevTools
 - Lombok
+- Validation
 - Spring Data JPA
 - MariaDB Driver
 - Spring Security
 - Spring Web
 - oauth2-client
 
-```xml
-<!-- 시큐리티 태그 라이브러리 -->
-<dependency>
-	<groupId>org.springframework.security</groupId>
-	<artifactId>spring-security-taglibs</artifactId>
-</dependency>
-
-<!-- JSP 템플릿 엔진 -->
-<dependency>
-	<groupId>org.apache.tomcat</groupId>
-	<artifactId>tomcat-jasper</artifactId>
-	<version>9.0.43</version>
-</dependency>
-
-<!-- JSTL -->
-<dependency>
-	<groupId>javax.servlet</groupId>
-	<artifactId>jstl</artifactId>
-</dependency>
-```
+###배운점
+1. class로 응답할 때 <b>MessageConverter</b>가 자동으로 json으로 변경해서 응답해준다.
+2. 스프링 시큐리티는 자동으로 지원해주는 것이 많다. (auth패키지 참고 + /logout 경로로 이동시 자동으로 세션을 끊어주기도 한다.)
 
 ### 데이터베이스
 
