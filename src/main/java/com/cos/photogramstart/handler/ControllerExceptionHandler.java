@@ -1,6 +1,7 @@
 package com.cos.photogramstart.handler;
 
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
 import com.cos.photogramstart.handler.ex.CustomVlidationApiException;
 import com.cos.photogramstart.handler.ex.CustomVlidationException;
 import com.cos.photogramstart.util.Script;
@@ -15,13 +16,21 @@ import java.util.Map;
 
 @RestController
 @ControllerAdvice
-public class ControllerExceptionHandler {
+public class ControllerExceptionHandler { //모든 exception은 여기로
 
-    @ExceptionHandler(CustomVlidationException.class) //모든 exception은 여기로
+    @ExceptionHandler(CustomVlidationException.class)
     public String validationException(CustomVlidationException e){
-        return Script.back(e.getErrorMap().toString());
+        if(e.getErrorMap() == null){
+            return Script.back(e.getMessage());
+        }else {
+            return Script.back(e.getErrorMap().toString());
+        }
     } //스크립트 응답
 
+    @ExceptionHandler(CustomException.class)
+    public String exception(CustomException e){
+        return Script.back(e.getMessage());
+    }
     @ExceptionHandler(CustomVlidationApiException.class)
     public ResponseEntity<CMResDto<?>> validationApiException(CustomVlidationApiException e){
         return new ResponseEntity<>(new CMResDto<>(-1, e.getMessage(), e.getErrorMap()), HttpStatus.BAD_REQUEST);
