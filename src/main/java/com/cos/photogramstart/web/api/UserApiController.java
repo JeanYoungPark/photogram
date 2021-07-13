@@ -41,7 +41,7 @@ public class UserApiController {
             User user = userService.회원수정(id, userUpdateDto.toEntity());
             //정보 수정 후 세션정보 변경
             principalDetails.setUser(user);
-            return new CMResDto<>(1, "회원수정완료", user);
+            return new CMResDto<>(1, "회원수정완료", user); //응답시에 user의 모든 함수가 호출되고 JSON으로 파싱하여 응답한다.
         }
     }
 }
