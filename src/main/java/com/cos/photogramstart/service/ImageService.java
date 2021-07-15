@@ -6,12 +6,15 @@ import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -19,6 +22,12 @@ import java.util.UUID;
 public class ImageService {
 
     private final ImageRepository imageRepository;
+
+    @Transactional(readOnly = true)
+    public Page<Image> 이미지스토리(long principalId, Pageable pageable){
+        Page<Image> images = imageRepository.mStroy(principalId, pageable);
+        return images;
+    }
 
     @Value("${file.path}") //yml에 저장된 파일저장 경로를 가져옴
     private String uploadFolder;
