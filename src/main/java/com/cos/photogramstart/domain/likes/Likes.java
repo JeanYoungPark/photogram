@@ -1,49 +1,45 @@
-package com.cos.photogramstart.domain.image;
+package com.cos.photogramstart.domain.likes;
 
-import com.cos.photogramstart.domain.likes.Likes;
+import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 @Entity
-public class Image {
+@Table(
+       uniqueConstraints = {
+               @UniqueConstraint(
+                       name="likes_uk",
+                       columnNames = {"imageid", "userId"}
+               )
+       }
+)
+public class Likes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String caption;
-    private String postImageUrl; //사진을 저장된 경로로
+
+    @JoinColumn(name = "imageId")
+    @ManyToOne
+    private Image image;
 
     @JsonIgnoreProperties({"images"})
     @JoinColumn(name = "userId")
     @ManyToOne
     private User user;
 
-    //이미지 좋아요
-    @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
-    private List<Likes> likes;
-
-    //이미지 댓글
-
     private LocalDateTime createDate;
-
-    @Transient //db에 컬럼이 만들어지지 않는다.
-    private boolean likeState;
-
-    @Transient
-    private int likeCount;
 
     @PrePersist
     public void createDate(){
