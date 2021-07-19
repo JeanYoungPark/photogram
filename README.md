@@ -15,18 +15,22 @@
 - Spring Web
 - oauth2-client
 
+###구현기능
+- 회원가입
+- 로그인 ,페이스북 로그인
+- 회원정보 수정
+- 구독 및 구독취소
+- 이미지 업로드
+- 스토리 리스트
+- 좋아요 및 좋아요취소
+- 댓글달기 및 댓글삭제
+
+
 ###배운점
 1. class로 응답할 때 <b>MessageConverter</b>가 자동으로 json으로 변경해서 응답해준다.
-2. 스프링 시큐리티는 자동으로 지원해주는 것이 많다. (auth패키지 참고 + /logout 경로로 이동시 자동으로 세션을 끊어주기도 한다.)
-3. N:N의 관계는 중간테이블이 필요하다.
-
-### 데이터베이스
-
-```sql
-create user 'cos'@'%' identified by 'cos1234';
-GRANT ALL PRIVILEGES ON *.* TO 'cos'@'%';
-create database photogram;
-```
+2. N:N의 관계는 중간테이블이 필요하다.
+3. 이미지 폴더를 외부에 두는 이유는 내부에 두었을때 이미지를 업로드 하면 deploy해야하는데 그 시간보다 후 처리 예를 들어 리다이렉트 되는 속도가 더 빠르면 오류와 같이 보일 수 있긴 때문, 하지만 외부에 두었을때는 deploy를 하지 않기때문에 업로드 이후 후 처리가 진행된다.
+4. qlrm 데이터베이스 결과를 자바클래스와 매핑해주는 라이브러리이다.
 
 ### yml 설정
 
@@ -47,9 +51,9 @@ spring:
       
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/costa?serverTimezone=Asia/Seoul
-    username: costa
-    password: costa1234
+    url: jdbc:mariadb://localhost:3306/(스키마이름))?serverTimezone=Asia/Seoul
+    username: (아이디)
+    password: (비밀번호)
     
   jpa:
     open-in-view: true
@@ -69,13 +73,16 @@ spring:
       name: test
       password: 1234   
 
+    oauth2:
+      client:
+        registration:
+          facebook:
+              client-id: (아이디)
+              client-secret: (비밀키)
+              scope:
+                - public_profile
+                - email
+
 file:
   path: C:/src/springbootwork-sts/upload/
-```
-
-### 태그라이브러리
-
-```jsp
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 ```
