@@ -84,10 +84,12 @@ public class UserService {
         //영속화된 오브젝트 수정정
         userEntity.setName(user.getName());
 
-        String rawPassword = user.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+        if(user.getPassword() != null){
+            String rawPassword = user.getPassword();
+            String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+            userEntity.setPassword(encPassword);
+        }
 
-        userEntity.setPassword(encPassword);
         userEntity.setBio(user.getBio());
         userEntity.setWebsite(user.getWebsite());
         userEntity.setPhone(user.getPhone());
