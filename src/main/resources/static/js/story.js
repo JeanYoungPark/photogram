@@ -173,6 +173,7 @@ function addComment(imageId) {
 		commentList.prepend(content);
 
 	}).fail(error=>{
+		alert(error.responseJSON.data.content);
 		console.log(error);
 	});
 

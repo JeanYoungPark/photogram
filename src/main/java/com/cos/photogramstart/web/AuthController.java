@@ -40,18 +40,8 @@ public class AuthController {
     //관련 내용 notion 확인
     @PostMapping("/auth/signup")
     public String signup(@Valid SignupRqDto signupRqDto, BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()){
-            Map<String, String> errorMap = new HashMap<>();
-            for (FieldError error : bindingResult.getFieldErrors()){
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            }
-            throw new CustomVlidationException("유효성 검사 실패함", errorMap);
-        }else {
-            User user = signupRqDto.toEntity();
-            User userEntity = authService.회원가입(user);
-            return "auth/signin";
-        }
-
+        User user = signupRqDto.toEntity();
+        User userEntity = authService.회원가입(user);
+        return "auth/signin";
     }
 }
