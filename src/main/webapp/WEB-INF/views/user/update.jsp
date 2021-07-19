@@ -40,7 +40,7 @@
 				<div class="content-item__04">
 					<div class="item__title">패스워드</div>
 					<div class="item__input">
-						<input type="password" name="password" placeholder="패스워드"/>
+						<input type="password" name="password" placeholder="패스워드" required="required"/>
 					</div>
 				</div>
 				<div class="content-item__05">
@@ -71,7 +71,7 @@
 					</div>
 				</div>
 				<div class="content-item__09">
-					<div class="item__title">전회번호</div>
+					<div class="item__title">전화번호</div>
 					<div class="item__input">
 						<input type="text" name="phone" placeholder="전화번호"
 							value="${principal.user.phone}" />
