@@ -28,7 +28,7 @@ public class ImageController {
     @GetMapping("/image/popular")
     public String popular(Model model){
 
-        List<Image> images = imageService.인기사진();
+        List<Image> images = imageService.popular();
         model.addAttribute("images", images);
 
         return "image/popular";
@@ -46,7 +46,7 @@ public class ImageController {
             throw new CustomVlidationException("이미지가 첨부되지 않았습니다.", null);
         }
 
-        imageService.사진업로드(imageUploadDto, principalDetails);
+        imageService.upload(imageUploadDto, principalDetails);
         return "redirect:/user/"+principalDetails.getUser().getId();
     }
 }

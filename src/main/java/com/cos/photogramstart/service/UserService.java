@@ -32,7 +32,7 @@ public class UserService {
     private String uploadFolder;
 
     @Transactional
-    public User 회원프로필사진변경(long principalId, MultipartFile profileImageFile){
+    public User modifyProfile(long principalId, MultipartFile profileImageFile){
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid + "_" + profileImageFile.getOriginalFilename();
         Path imageFilePath = Paths.get(uploadFolder+imageFileName);
@@ -52,7 +52,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserProfileDto 회원프로필(long pageUserId, long principalId){
+    public UserProfileDto profile(long pageUserId, long principalId){
         UserProfileDto dto = new UserProfileDto();
 
         User user = userRepository.findById(pageUserId).orElseThrow(() -> {
@@ -77,7 +77,7 @@ public class UserService {
     }
 
     @Transactional
-    public User 회원수정(Long id, User user){
+    public User modify(Long id, User user){
         //영속화
         User userEntity = userRepository.findById(id).orElseThrow(() -> { return new CustomVlidationApiException("찾을 수 없는 id입니다."); });
 

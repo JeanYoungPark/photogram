@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/auth/signup")
     public String signup(@Valid SignupRqDto signupRqDto, BindingResult bindingResult){
         User user = signupRqDto.toEntity();
-        User userEntity = authService.회원가입(user);
+        User userEntity = authService.join(user);
         return "auth/signin";
     }
 }

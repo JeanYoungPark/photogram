@@ -18,7 +18,7 @@ public class CommentService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Comment 댓글쓰기(String content, long imageId, long userId){
+    public Comment write(String content, long imageId, long userId){
 
         //Tip (객체를 만들 때 id 값만 담아서 insert 할 수 있다.)
         //대신 return 시에 image 객체는 id값 외에는 빈 객체를 리턴
@@ -38,7 +38,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void 댓글삭제(long commentId){
+    public void delete(long commentId){
         try{
             commentRepository.deleteById(commentId);
         }catch (Exception e){

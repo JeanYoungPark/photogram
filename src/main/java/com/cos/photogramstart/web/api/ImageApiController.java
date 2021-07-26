@@ -25,21 +25,21 @@ public class ImageApiController {
     public ResponseEntity<?> imageStory(
             @AuthenticationPrincipal PrincipalDetails principalDetails,
             @PageableDefault(size=3) Pageable pageable){
-        Page<Image> images = imageService.이미지스토리(principalDetails.getUser().getId(), pageable);
+        Page<Image> images = imageService.story(principalDetails.getUser().getId(), pageable);
         return new ResponseEntity<>(new CMResDto<>(1,"성공",images), HttpStatus.OK);
     }
 
     @PostMapping("/api/image/{imageId}/likes")
     public ResponseEntity<?> likes(@PathVariable long imageId, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        likesService.좋아요(imageId, principalDetails.getUser().getId());
-        int likeCount = likesService.좋아요갯수(imageId);
+        likesService.like(imageId, principalDetails.getUser().getId());
+        int likeCount = likesService.count(imageId);
         return new ResponseEntity<>(new CMResDto<>(1, "좋아요성공", likeCount),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/api/image/{imageId}/likes")
     public ResponseEntity<?> unlikes(@PathVariable long imageId, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        likesService.좋아요취소(imageId, principalDetails.getUser().getId());
-        int likeCount = likesService.좋아요갯수(imageId);
+        likesService.cancel(imageId, principalDetails.getUser().getId());
+        int likeCount = likesService.count(imageId);
         return new ResponseEntity<>(new CMResDto<>(1, "좋아요취소 성공", likeCount), HttpStatus.OK);
     }
 

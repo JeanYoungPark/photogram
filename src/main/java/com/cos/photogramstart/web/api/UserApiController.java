@@ -30,14 +30,14 @@ public class UserApiController {
 
     @PutMapping("/api/user/{principalId}/profileImageUrl")
     public ResponseEntity<?> profileImageUrlUpdate(@PathVariable long principalId, MultipartFile profileImageFile, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        User user = userService.회원프로필사진변경(principalId, profileImageFile);
+        User user = userService.modifyProfile(principalId, profileImageFile);
         principalDetails.setUser(user); //세션 변경
         return new ResponseEntity<>(new CMResDto<>(1,"프로필사진변경 성공",null),HttpStatus.OK);
     }
 
     @GetMapping("/api/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@PathVariable long pageUserId, @AuthenticationPrincipal PrincipalDetails principalDetails){
-        List<SubscribeDto> dto = subscribeService.구독리스트(principalDetails.getUser().getId(), pageUserId);
+        List<SubscribeDto> dto = subscribeService.list(principalDetails.getUser().getId(), pageUserId);
         return new ResponseEntity<>(new CMResDto<>(1,"구독자 정보 리스트 불러오기 성공", dto), HttpStatus.OK);
     }
 
@@ -47,7 +47,7 @@ public class UserApiController {
             @Valid UserUpdateDto userUpdateDto,
             BindingResult bindingResult, //꼭 @Valid 다음에 적어야한다.
             @AuthenticationPrincipal PrincipalDetails principalDetails){
-        User user = userService.회원수정(id, userUpdateDto.toEntity());
+        User user = userService.modify(id, userUpdateDto.toEntity());
         //정보 수정 후 세션정보 변경
         principalDetails.setUser(user);
         return new CMResDto<>(1, "회원수정완료", user); //응답시에 user의 모든 함수가 호출되고 JSON으로 파싱하여 응답한다.

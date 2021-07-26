@@ -24,12 +24,12 @@ public class ImageService {
     private final ImageRepository imageRepository;
 
     @Transactional(readOnly = true)
-    public List<Image> 인기사진(){
+    public List<Image> popular(){
         return imageRepository.mPopular();
     }
 
     @Transactional(readOnly = true)
-    public Page<Image> 이미지스토리(long principalId, Pageable pageable){
+    public Page<Image> story(long principalId, Pageable pageable){
         Page<Image> images = imageRepository.mStroy(principalId, pageable);
 
         images.forEach((image)->{
@@ -50,7 +50,7 @@ public class ImageService {
     private String uploadFolder;
 
     @Transactional
-    public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails){
+    public void upload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails){
         UUID uuid = UUID.randomUUID(); //고유성이 보장되는 id를 만들기 위한 표준 규약
         String imageFileName = uuid+"_"+imageUploadDto.getFile().getOriginalFilename();
         Path imageFilePath = Paths.get(uploadFolder+imageFileName);

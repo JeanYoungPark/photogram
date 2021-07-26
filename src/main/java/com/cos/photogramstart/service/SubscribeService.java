@@ -20,7 +20,7 @@ public class SubscribeService {
     private final EntityManager em; //Repository는 EntityManager를 구현해서 만들어져있는 구현체
 
     @Transactional(readOnly = true)
-    public List<SubscribeDto> 구독리스트(long principalId, long pageUserId){
+    public List<SubscribeDto> list(long principalId, long pageUserId){
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT u.id, u.username, u.profileImageUrl, ");
         sb.append("if((SELECT 1 FROM subscribe WHERE fromUserId = ? AND toUserId = u.id),1,0) subscribeState, ");
@@ -43,7 +43,7 @@ public class SubscribeService {
 
 
     @Transactional
-    public void 구독하기(long fromUserId, long toUserId){
+    public void follow(long fromUserId, long toUserId){
         try{
             subscribeRepository.mSubscribe(fromUserId, toUserId);
         }catch (Exception e){
@@ -52,7 +52,7 @@ public class SubscribeService {
     }
 
     @Transactional
-    public void 구독취소하기(long fromUserId, long toUserId){
+    public void followCancel(long fromUserId, long toUserId){
         subscribeRepository.mUnSubscribe(fromUserId, toUserId);
     }
 
